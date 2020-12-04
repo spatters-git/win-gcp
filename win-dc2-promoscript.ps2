@@ -1,0 +1,19 @@
+#
+# Windows PowerShell script for AD DS Deployment
+# PS script to promote the second DC in example.org as escribed here:
+# https://cloud.google.com/solutions/deploying-microsoft-active-directory-domain-controllers-with-advanced-networking-configuration-on-gcp#configure_dc-2_as_a_domain_controller
+
+Import-Module ADDSDeployment
+Install-ADDSDomainController `
+-NoGlobalCatalog:$false `
+-CreateDnsDelegation:$false `
+-Credential (Get-Credential) `
+-CriticalReplicationOnly:$false `
+-DatabasePath "C:\Windows\NTDS" `
+-DomainName "example.org" `
+-InstallDns:$true `
+-LogPath "C:\Windows\NTDS" `
+-NoRebootOnCompletion:$false `
+-SiteName "GCP-us-east4" `
+-SysvolPath "C:\Windows\SYSVOL" `
+-Force:$true
